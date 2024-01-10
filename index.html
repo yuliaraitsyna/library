@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="code.js" defer></script>
+    <title>Library</title>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="head-container">
+        <img src="open-book.png" alt="Library Logo" id="logo-image">
+        <h1 id="logo">MY LIBRARY</h1>
+        <button id="new-btn" onclick="ShowAddBookModal()">NEW +</button>
+    </div>
+    <main>
+        <div id="book-grid"></div>
+    </main>
+    <footer>
+        <p>
+          Copyright ©
+          yuliaraitsyna
+        </p>
+        <a href="https://github.com/yuliaraitsyna" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+    </footer>  
+</body>
+
+<form class="modal" id="add-book-modal">
+    <div class="modal-flex">
+        <h2 class="header">Add new book</h2>
+        <input id="title" type="text" placeholder="Title" maxlength="50" required>
+        <input id="author" type="text" placeholder="Author" maxlength="50" required>
+        <input id="pages" type="number" placeholder="Pages" required>
+        <h3>Have you read it?</h3>
+        <input id="status" type="checkbox">
+        <button id="submit-btn" type="submit" onclick="OnSubmitButtonClick(event)">Submit</button>
+    </div>
+    <div class="exit-flex">
+        <div id="exit-modal-btn" onclick="HideAddBookModal()">x</div>
+    </div>
+</form>
+</html>
