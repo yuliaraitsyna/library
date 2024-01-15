@@ -1,43 +1,83 @@
 class Book {
+    #_title;
+    #_author;
+    #_pages;
+    #_status;
+
     constructor(title, author, pages, status) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.status = status;
+        this.#_title = title;
+        this.#_author = author;
+        this.#_pages = pages;
+        this.#_status = status;
+    }
+
+    get Title() {
+        return this.#_title;
+    }
+    get Author() {
+        return this.#_author;
+    }
+    get Pages() {
+        return this.#_pages;
+    }
+    get Status() {
+        return this.#_status;
+    }
+
+    set Title(title) {
+        this.#_title = title;
+    }
+    set Author(author) {
+        this.#_author = author;
+    }
+    set Pages(pages) {
+        this.#_pages = pages;
+    }
+    set Status(status) {
+        this.#_status = status;
     }
 }
-function CreateBookCard(_title, _author, _pages, _status)
+
+function CreateBookCard(title, author, pages, status)
 {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
+
     const titlePlaceholder = document.createElement("p");
     titlePlaceholder.classList.add("title");
     titlePlaceholder.textContent = "Title";
+
     const titleHeader = document.createElement("p");
     titleHeader.classList.add("card-title");
-    titleHeader.textContent = _title;
+    titleHeader.textContent = title;
+
     const authorPlaceholder = document.createElement("p");
     authorPlaceholder.classList.add("author");
     authorPlaceholder.textContent = "Author";
+
     const authorHeader = document.createElement("p");
-    authorHeader.textContent = _author;
+    authorHeader.textContent = author;
     authorHeader.classList.add("card-author");
+
     const pagesPlaceholder = document.createElement("p");
     pagesPlaceholder.classList.add("pages");
     pagesPlaceholder.textContent = "Pages";
+
     const pagesHeader = document.createElement("p");
-    pagesHeader.textContent = _pages;
+    pagesHeader.textContent = pages;
     pagesHeader.classList.add("card-pages");
+
     const readStatus = document.createElement("div");
+
     const removeBookButton = document.createElement("button");
     removeBookButton.innerHTML = "Remove";
     removeBookButton.classList.add("remove-btn");
     removeBookButton.addEventListener("click", function () {
-        library.removeBook(_title);
+        library.RemoveBook(title);
         bookGrid.removeChild(bookCard);
     });
 
-    if(_status)
+    if(status)
     {
         readStatus.innerHTML = "Read";
         readStatus.classList.remove("not-read");
@@ -61,25 +101,26 @@ function CreateBookCard(_title, _author, _pages, _status)
 }
 
 class Library {
+    #library;
     constructor() {
         this.library = [];
     }
 
-    addBook(title, author, pages, status) {
+    AddBook(title, author, pages, status) {
         if (this.isValidBook(title, author, pages) && !this.isInLibrary(title)) {
            const newBook = new Book(title, author, pages, status);
            this.library.push(newBook);
-           CreateBookCard(title, author, pages, status);
+           CreateBookCard(newBook.Title, newBook.Author, newBook.Pages, newBook.Status);
         } else {
             alert("This book is invalid or already in your library!");
         }
     }
 
-    removeBook(title) {
-        this.library = this.library.filter((book) => book.title !== title);
+    RemoveBook(title) {
+        this.library = this.library.filter((book) => book.Title !== title);
     }
 
-    getBook(title) {
+    GetBook(title) {
         return this.library.find((book) => book.title === title);
     }
 
@@ -122,14 +163,12 @@ function HideAddBookModal()
 
 function OnSubmitButtonClick(event) {
     event.preventDefault();
-    library.addBook(title.value.trim(), author.value.trim(), pages.value.trim(), status.checked);
+    library.AddBook(title.value.trim(), author.value.trim(), pages.value.trim(), status.checked);
     title.value = "";
     author.value = "";
     pages.value = "";
     status.checked = false;
     HideAddBookModal();
 }
-
-
 
 CreateBookCard("hello", "world", 89, true);
